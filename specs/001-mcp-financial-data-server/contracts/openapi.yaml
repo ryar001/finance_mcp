@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: MCP Financial Data Server
+  version: 1.0.0
+paths:
+  /earnings_statement:
+    post:
+      summary: Get the earnings statement for a company.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: string
+                  description: The name of the company.
+                period:
+                  type: string
+                  description: The time period for the earnings statement (e.g., "Q3 2025").
+      responses:
+        '200':
+          description: The earnings statement for the company.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EarningsStatementRead'
+components:
+  schemas:
+    EarningsStatementRead:
+      type: object
+      properties:
+        id:
+          type: integer
+        company:
+          type: string
+        period:
+          type: string
+        income_statement:
+          type: string
+        balance_sheet:
+          type: string
+        cashflow_statement:
+          type: string
