@@ -1,6 +1,7 @@
 import pytest
 from src.main_mcp import mcp
 from fastmcp import FastMCP
+from src.models.income_statement import IncomeStatement
 
 def test_mcp_instance():
     """
