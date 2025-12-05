@@ -1,4 +1,18 @@
-
 .DS_Store
 __pycache__/
-.env
+.env*
+
+# Python
+*.pyc
+.venv/
+venv/
+dist/
+*.egg-info/
+
+# ignore uv cache directory
+.uv/
+
+# Ignore sensitive files and logs
+.stockgpt_google_cloud_service_account.json
+debug_gemini.py
+logs/
