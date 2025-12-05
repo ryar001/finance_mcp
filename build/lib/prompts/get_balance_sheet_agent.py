@@ -1,10 +1,10 @@
 from src.prompts.prompt_base import BasePrompt
-from src.models.balance_sheet import QuarterlyBalanceSheet
+from src.models.balance_sheet import ToPullBalanceSheet
 from src.prompts.sources import GET_BALANCE_SHEET_SOURCES
 
 class GetBalanceSheetAgent(BasePrompt):
     get_balance_sheet_sources = GET_BALANCE_SHEET_SOURCES
-    json_schema = QuarterlyBalanceSheet.model_json_schema()
+    json_schema = ToPullBalanceSheet.model_json_schema()
 
     prompt = """
         You are an AI assistant specialized in financial data extraction.
@@ -17,7 +17,6 @@ class GetBalanceSheetAgent(BasePrompt):
         {get_balance_sheet_sources}
         
         Output the result as a single, clean JSON object without any other text.
-        try to fill all the fields by using websearch with the company name and the sources provided
         Follow the JSON schema exactly as specified:
         {json_schema}
         """

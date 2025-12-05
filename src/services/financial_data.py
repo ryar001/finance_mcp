@@ -1,137 +1,113 @@
-import os
-from dotenv import load_dotenv
-# from google.genai.client import AsyncClient,Client
-from google import genai
-from src.models.income_statement import QuarterlyIncomeStatement,ToPullIncomeStatement
-from src.models.balance_sheet import QuarterlyBalanceSheet, ToPullBalanceSheet
+from yfinance import Ticker
+
+from src.models.income_statement import QuarterlyIncomeStatement
+from src.models.balance_sheet import QuarterlyBalanceSheet
+from src.models.cash_flow_statement import QuarterlyCashFlowStatement
 import json
 from pydantic import ValidationError
-from google.genai.types import GenerateContentConfig, Tool, GoogleSearch
+from typing import Dict,Tuple
 
-from src.components.const import LlmModels
+from src.components.const import YFinanceEnum
 from src.components.init_config import logger
-from src.services.utils import clean_json_output
-from src.prompts.get_income_statement_agent import GetIncomeStatementAgent
-from src.prompts.get_balance_sheet_agent import GetBalanceSheetAgent
+from src.components.utils import map_income_statement,map_balance_sheet, map_cash_flow_statement
 
 
-# Load environment variables from .env file
-load_dotenv()
-
-
-# Configure the Gemini API key
-api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    # Changed print to logger.error
-    logger.error("GEMINI_API_KEY not found in .env file")
-    raise ValueError("GEMINI_API_KEY not found in .env file")
-logger.debug(f"GEMINI_API_KEY loaded by genai.configure (masked): {api_key[:4]}...{api_key[-4:]}") # Debug print changed to logger.debug
-
-client = genai.Client(api_key=api_key)
-# client_api = client._get_api_client()
-# async_client = AsyncClient(client_api)
-
-# Create a GenerativeModel instance
-llm = client.models
-
-def get_config_with_search()-> GenerateContentConfig:
-    grounding_tool = Tool(
-        google_search=GoogleSearch()
-    )
-
-    config_with_search = GenerateContentConfig(
-        tools=[grounding_tool],
-    )
-    
-    return config_with_search
-
-
-async def list_available_models():
-    """Lists all available Gemini models and their capabilities."""
-    logger.info("--- Available Gemini Models ---") # Changed print to logger.info
-    for m in genai.list_models():
-        logger.info(f"Name: {m.name}") # Changed print to logger.info
-        logger.info(f"  Supported Generation Methods: {m.supported_generation_methods}") # Changed print to logger.info
-        logger.info(f"  Description: {m.description}") # Changed print to logger.info
-        logger.info("-" * 30) # Changed print to logger.info
-    logger.info("------------------------------\n") # Changed print to logger.info
-
-async def get_income_statement(company: str) -> QuarterlyIncomeStatement:
+async def get_income_statement(ticker: str, freq: YFinanceEnum.Freq = None,date_format: str = "%d/%m/%Y") -> Tuple[Dict[str, QuarterlyIncomeStatement],list[str]]:
     """
     Fetches the income statement for a given company using an LLM to perform a web search.
     Parses the result into an IncomeStatement Pydantic model.
     """
-
-    prompt = GetIncomeStatementAgent.get_formatted_prompt(company=company)
     try:
-        response = llm.generate_content(
-            model=LlmModels.GEMINI_2_5_FLASH,
-            contents=prompt, 
-            config=get_config_with_search()
-        )
+        response = Ticker(ticker.upper()).get_income_stmt(freq=freq or YFinanceEnum.Freq.QUARTERLY)
+        final = {}
+        missing_keys = []
+        for col_name,series in response.items():
+            date = col_name.strftime(date_format)
+            final[date],missing_keys = map_income_statement(series,date,ticker)
+        logger.debug(f"[{get_income_statement.__name__}] LLM Raw Output: {final}")
         
-        gemini_output_text = response.text
-        logger.info(f"LLM Raw Output: {gemini_output_text}")
-
-        cleaned_text = clean_json_output(gemini_output_text)
-        # Correctly parse and validate the JSON using the ToPullIncomeStatement model
-        pulled_data = ToPullIncomeStatement.model_validate_json(cleaned_text)
-        logger.debug(f"Parsed LLM Output: {pulled_data}")
-
-        # Create the final statement with derived metrics
-        final_statement = QuarterlyIncomeStatement.from_pulled_data(pulled_data)
-        logger.debug(f"Final income statement data: {final_statement}")
-        
-        return final_statement
+        return final,missing_keys
 
     except json.JSONDecodeError as e:
-        logger.error(f"Error decoding JSON from Gemini: {e}")
-        return None
+        logger.error(f"[{get_income_statement.__name__}] Error decoding JSON from Gemini: {e}")
+        return None,[]
     except ValidationError as e:
-        logger.error(f"Pydantic validation error: {e}")
-        return None
+        logger.error(f"[{get_income_statement.__name__}] Pydantic validation error: {e}")
+        return None,[]
     except Exception as e:
-        logger.exception(f"An unexpected error occurred during LLM call: {e}")
-        return None
+        logger.exception(f"[{get_income_statement.__name__}] An unexpected error occurred during LLM call: {e}")
+        return None,[]
 
-async def get_balance_sheet(company: str) -> QuarterlyBalanceSheet:
+async def get_balance_sheet(ticker: str, freq: YFinanceEnum.Freq = None,date_format: str = "%d/%m/%Y") -> Tuple[Dict[str, QuarterlyBalanceSheet],list[str]]:
     """
-    Fetches the balance sheet for a given company using an LLM to perform a web search.
+    Fetches the balance sheet for a given company using yfinance.
     Parses the result into a BalanceSheet Pydantic model.
     """
 
-    prompt = GetBalanceSheetAgent.get_formatted_prompt(company=company)
     try:
-        response = llm.generate_content(
-            model=LlmModels.GEMINI_2_5_FLASH,
-            contents=prompt, 
-            config=get_config_with_search()
-        )
+        # Fetch data
+        response = Ticker(ticker.upper()).get_balance_sheet(freq=freq or YFinanceEnum.Freq.QUARTERLY)
         
-        gemini_output_text = response.text
-        logger.info(f"LLM Raw Output: {gemini_output_text}")
-
-        cleaned_text = clean_json_output(gemini_output_text)
-        # Correctly parse and validate the JSON using the ToPullBalanceSheet model
-        pulled_data = ToPullBalanceSheet.model_validate_json(cleaned_text)
-        logger.debug(f"Parsed LLM Output: {pulled_data}")
-
-        # Create the final statement with derived metrics
-        final_statement = QuarterlyBalanceSheet.from_pulled_data(pulled_data)
-        logger.debug(f"Final balance sheet data: {final_statement}")
+        # We need to pick one quarter to return. Assuming latest.
+        # response is a DataFrame where columns are Dates.
+        if response.empty:
+            logger.warning(f"[{get_balance_sheet.__name__}] No data found for {ticker}")
+            return None,[]
+        final = {}
+        missing_keys = []
+        for col_name,series in response.items():
+            date = col_name.strftime(date_format)
+            final[date],missing_keys = map_balance_sheet(series,date,ticker)
+        logger.debug(f"[{get_balance_sheet.__name__}] LLM Raw Output: {final}")
         
-        return final_statement
+        return final,missing_keys
 
-    except json.JSONDecodeError as e:
-        logger.error(f"Error decoding JSON from Gemini: {e}")
-        return None
-    except ValidationError as e:
-        logger.error(f"Pydantic validation error: {e}")
-        return None
     except Exception as e:
-        logger.exception(f"An unexpected error occurred during LLM call: {e}")
-        return None
+        logger.exception(f"[{get_balance_sheet.__name__}] An unexpected error occurred: {e}")
+        return None,[]
+
+async def get_cashflow_statement(ticker: str, freq: YFinanceEnum.Freq = None,date_format: str = "%d/%m/%Y") -> Tuple[Dict[str, QuarterlyCashFlowStatement],list[str]]:
+    """
+    Fetches the cash flow statement for a given company using yfinance.
+    Parses the result into a CashFlowStatement Pydantic model.
+    """
+
+    try:
+        # Fetch data
+        response = Ticker(ticker.upper()).get_cash_flow(freq=freq or YFinanceEnum.Freq.QUARTERLY)
+        
+        # We need to pick one quarter to return. Assuming latest.
+        # response is a DataFrame where columns are Dates.
+        if response.empty:
+            logger.warning(f"[{get_cashflow_statement.__name__}] No data found for {ticker}")
+            return None,[]
+        final = {}
+        missing_keys = []
+        for col_name,series in response.items():
+            date = col_name.strftime(date_format)
+            final[date],missing_keys = map_cash_flow_statement(series,date,ticker)
+        logger.debug(f"[{get_cashflow_statement.__name__}] LLM Raw Output: {final}")
+        
+        return final,missing_keys
+
+    except Exception as e:
+        logger.exception(f"[{get_cashflow_statement.__name__}] An unexpected error occurred: {e}")
+        return None,[]
 
 # The rest of the service functions will be added in subsequent tasks
 # Call list_available_models during development to check available models
 # await list_available_models() # This line would be uncommented to run the list function.
+
+# if __name__ == "__main__":
+#     import asyncio
+#     async def main():
+#         list_of_models = await list_available_models()
+#         print(list_of_models[0])
+
+#         income_statement = await get_income_statement("Apple")
+#         print(income_statement)
+
+#         balance_sheet = await get_balance_sheet("Apple")
+#         print(balance_sheet)
+
+#     asyncio.run(main())

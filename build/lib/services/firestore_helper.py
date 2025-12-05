@@ -4,8 +4,9 @@ import logging
 
 from google.cloud import firestore
 from google.cloud.firestore import DocumentSnapshot
-from src.models.income_statement import QuarterlyIncomeStatement
+from src.models.income_statement import QuarterlyIncomeStatement, ToPullIncomeStatement
 from src.components.const import QUARTERLY_INCOME_STATEMENT_COLLECTION, FIRESTORE_DATABASE,ExchangesEnum
+from src.services.utils import get_nosql_document_id
 
 load_dotenv()
 
@@ -59,3 +60,39 @@ def get_document_from_firestore(document_id: str,db: firestore.Client = None,col
     return doc
 
 
+
+if __name__ == '__main__':
+    # --- Example Usage ---
+
+    # 1. Create a sample ToPullIncomeStatement object with raw data.
+    raw_data = ToPullIncomeStatement(
+        company_name="Apple Inc.",
+        ticker="AAPL",
+        exchange=ExchangesEnum.NASDAQ,
+        fiscal_year=2025,
+        fiscal_quarter="Q1",
+        last_earnings_date="2025-01-30",
+        revenue=90000000000,
+        cost_of_goods_sold=50000000000,
+        selling_general_admin_expenses=10000000000,
+        research_and_development_expense=7000000000,
+        depreciation_and_amortization=3000000000,
+        interest_income=1000000000,
+        interest_expense=500000000,
+        income_tax_expense=5000000000,
+        weighted_avg_shares_diluted=16000000000
+    )
+    # 2. Create a QuarterlyIncomeStatement from the raw data.
+    # This will also calculate the derived financial metrics.
+    quarterly_statement = QuarterlyIncomeStatement.from_pulled_data(raw_data)
+    json_data = quarterly_statement.model_dump(mode='json')
+    collection = QUARTERLY_INCOME_STATEMENT_COLLECTION
+    db = firestore.Client(database=FIRESTORE_DATABASE)
+    document_id = get_nosql_document_id(quarterly_statement.ticker, quarterly_statement.exchange, quarterly_statement.fiscal_year, quarterly_statement.fiscal_quarter)
+    # 3. Upload the final statement to Firestore.
+    upload_income_statement_to_firestore(json_data,document_id,db,collection)
+
+    # 4. Get the statement from Firestore.
+    
+    statement = get_income_statement_from_firestore(document_id)
+    print(statement)

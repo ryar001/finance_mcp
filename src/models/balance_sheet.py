@@ -1,75 +1,103 @@
-from __future__ import annotations
-from sqlmodel import SQLModel, Field
+import sys
+from pathlib import Path
 from typing import Optional
-from src.components.const import ExchangesEnum
+from sqlmodel import Field
+from src.models.base_model import BaseStatementsModel
 
-class BalanceSheetBase(SQLModel):
-    cash: Optional[int] = Field(default=None, description="Cash and cash equivalents")
-    accounts_receivable: Optional[int] = Field(default=None, description="Accounts receivable")
-    inventory: Optional[int] = Field(default=None, description="Inventory")
-    property_plant_equipment: Optional[int] = Field(default=None, description="Property, plant, and equipment")
-    accounts_payable: Optional[int] = Field(default=None, description="Accounts payable")
-    debt: Optional[int] = Field(default=None, description="Short and long-term debt")
-    shareholders_equity: Optional[int] = Field(default=None, description="Shareholder's equity")
-
-class ToPullBalanceSheet(BalanceSheetBase):
-    """
-    Represents the fields that must be pulled from the
-    LLM for a balance sheet.
-    """
-    company_name: str = Field(description="The official name of the company (e.g., 'Apple Inc.').")
-    ticker: str = Field(description="The stock ticker symbol for the company (e.g., 'AAPL').")
-    exchange: ExchangesEnum = Field(description="The stock exchange where the company is listed (e.g., 'NASDAQ','NYSE').")
-    fiscal_year: int = Field(description="The fiscal year for the report (e.g., 2025).")
-    fiscal_quarter: str = Field(description="The fiscal quarter for the report as a string (e.g., 'Q1', 'Q4').")
-    last_earnings_date: Optional[str] = Field(
-        default=None, description="The date of the last earnings report, in any common format (e.g., '2025-10-30')."
-    )
-
-class QuarterlyBalanceSheet(BalanceSheetBase, table=True):
-    """
-    Represents a quarterly balance sheet, including derived metrics.
-    """
-    # Primary Key
-    company_name: str = Field(description="The official name of the company (e.g., 'Apple Inc.').")
-    ticker: str = Field(description="The stock ticker symbol for the company (e.g., 'AAPL').", primary_key=True)
-    exchange: ExchangesEnum = Field(description="The stock exchange where the company is listed (e.g., 'NASDAQ','NYSE').", primary_key=True)
-    fiscal_year: int = Field(description="The fiscal year for the report (e.g., 2025).", primary_key=True)
-    fiscal_quarter: str = Field(description="The fiscal quarter for the report as a string (e.g., 'Q1', 'Q4').", primary_key=True)
-    last_earnings_date: Optional[str] = Field(
-        default=None, description="The date of the last earnings report, in any common format (e.g., '2025-10-30')."
-    )
-
-    # Derived Metrics
-    total_current_assets: Optional[int] = Field(default=None, description="Total current assets")
-    total_assets: Optional[int] = Field(default=None, description="Total assets")
-    total_liabilities: Optional[int] = Field(default=None, description="Total liabilities")
-    total_liabilities_and_equity: Optional[int] = Field(default=None, description="Total liabilities and shareholder's equity")
-
-    @classmethod
-    def from_pulled_data(cls, pulled_data: ToPullBalanceSheet) -> "QuarterlyBalanceSheet":
-        """
-        Creates a QuarterlyBalanceSheet instance from raw pulled data,
-        calculating the derived financial metrics.
-        """
-        # --- Calculate Derived Metrics ---
-        total_current_assets = (pulled_data.cash or 0) + \
-                               (pulled_data.accounts_receivable or 0) + \
-                               (pulled_data.inventory or 0)
-
-        total_assets = total_current_assets + (pulled_data.property_plant_equipment or 0)
-
-        total_liabilities = (pulled_data.accounts_payable or 0) + (pulled_data.debt or 0)
-        
-        total_liabilities_and_equity = total_liabilities + (pulled_data.shareholders_equity or 0)
+# Add the project root to the Python path
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
 
-        return cls(
-            # Pass all fields from pulled_data
-            **pulled_data.model_dump(),
-            # Overwrite with calculated derived metrics
-            total_current_assets=total_current_assets,
-            total_assets=total_assets,
-            total_liabilities=total_liabilities,
-            total_liabilities_and_equity=total_liabilities_and_equity
-        )
+class QuarterlyBalanceSheet(BaseStatementsModel, table=True):
+    """SQLModel for storing quarterly balance sheets in the database."""
+    __tablename__ = "quarterly_balance_sheets"
+
+
+    # Financial Metrics
+    ordinary_shares_number: Optional[int] = Field(default=None, nullable=True)
+    share_issued: Optional[int] = Field(default=None, nullable=True)
+    net_debt: Optional[int] = Field(default=None, nullable=True)
+    total_debt: Optional[int] = Field(default=None, nullable=True)
+    tangible_book_value: Optional[int] = Field(default=None, nullable=True)
+    invested_capital: Optional[int] = Field(default=None, nullable=True)
+    working_capital: Optional[int] = Field(default=None, nullable=True)
+    net_tangible_assets: Optional[int] = Field(default=None, nullable=True)
+    capital_lease_obligations: Optional[int] = Field(default=None, nullable=True)
+    common_stock_equity: Optional[int] = Field(default=None, nullable=True)
+    total_capitalization: Optional[int] = Field(default=None, nullable=True)
+    total_equity_gross_minority_interest: Optional[int] = Field(default=None, nullable=True)
+    stockholders_equity: Optional[int] = Field(default=None, nullable=True)
+    gains_losses_not_affecting_retained_earnings: Optional[int] = Field(default=None, nullable=True)
+    other_equity_adjustments: Optional[int] = Field(default=None, nullable=True)
+    retained_earnings: Optional[int] = Field(default=None, nullable=True)
+    capital_stock: Optional[int] = Field(default=None, nullable=True)
+    common_stock: Optional[int] = Field(default=None, nullable=True)
+    total_liabilities_net_minority_interest: Optional[int] = Field(default=None, nullable=True)
+    total_non_current_liabilities_net_minority_interest: Optional[int] = Field(default=None, nullable=True)
+    other_non_current_liabilities: Optional[int] = Field(default=None, nullable=True)
+    tradeand_other_payables_non_current: Optional[int] = Field(default=None, nullable=True)
+    non_current_deferred_liabilities: Optional[int] = Field(default=None, nullable=True)
+    non_current_deferred_revenue: Optional[int] = Field(default=None, nullable=True)
+    non_current_deferred_taxes_liabilities: Optional[int] = Field(default=None, nullable=True)
+    long_term_debt_and_capital_lease_obligation: Optional[int] = Field(default=None, nullable=True)
+    long_term_capital_lease_obligation: Optional[int] = Field(default=None, nullable=True)
+    long_term_debt: Optional[int] = Field(default=None, nullable=True)
+    current_liabilities: Optional[int] = Field(default=None, nullable=True)
+    other_current_liabilities: Optional[int] = Field(default=None, nullable=True)
+    current_deferred_liabilities: Optional[int] = Field(default=None, nullable=True)
+    current_deferred_revenue: Optional[int] = Field(default=None, nullable=True)
+    current_debt_and_capital_lease_obligation: Optional[int] = Field(default=None, nullable=True)
+    current_debt: Optional[int] = Field(default=None, nullable=True)
+    other_current_borrowings: Optional[int] = Field(default=None, nullable=True)
+    commercial_paper: Optional[int] = Field(default=None, nullable=True)
+    pensionand_other_post_retirement_benefit_plans_current: Optional[int] = Field(default=None, nullable=True)
+    payables_and_accrued_expenses: Optional[int] = Field(default=None, nullable=True)
+    payables: Optional[int] = Field(default=None, nullable=True)
+    total_tax_payable: Optional[int] = Field(default=None, nullable=True)
+    income_tax_payable: Optional[int] = Field(default=None, nullable=True)
+    accounts_payable: Optional[int] = Field(default=None, nullable=True)
+    total_assets: Optional[int] = Field(default=None, nullable=True)
+    total_non_current_assets: Optional[int] = Field(default=None, nullable=True)
+    other_non_current_assets: Optional[int] = Field(default=None, nullable=True)
+    financial_assets: Optional[int] = Field(default=None, nullable=True)
+    investments_and_advances: Optional[int] = Field(default=None, nullable=True)
+    investmentin_financial_assets: Optional[int] = Field(default=None, nullable=True)
+    available_for_sale_securities: Optional[int] = Field(default=None, nullable=True)
+    financial_assets_designatedas_fair_value_through_profitor_loss_total: Optional[int] = Field(default=None, nullable=True)
+    long_term_equity_investment: Optional[int] = Field(default=None, nullable=True)
+    goodwill_and_other_intangible_assets: Optional[int] = Field(default=None, nullable=True)
+    other_intangible_assets: Optional[int] = Field(default=None, nullable=True)
+    goodwill: Optional[int] = Field(default=None, nullable=True)
+    net_ppe: Optional[int] = Field(default=None, nullable=True)
+    accumulated_depreciation: Optional[int] = Field(default=None, nullable=True)
+    gross_ppe: Optional[int] = Field(default=None, nullable=True)
+    leases: Optional[int] = Field(default=None, nullable=True)
+    other_properties: Optional[int] = Field(default=None, nullable=True)
+    machinery_furniture_equipment: Optional[int] = Field(default=None, nullable=True)
+    buildings_and_improvements: Optional[int] = Field(default=None, nullable=True)
+    land_and_improvements: Optional[int] = Field(default=None, nullable=True)
+    properties: Optional[int] = Field(default=None, nullable=True)
+    current_assets: Optional[int] = Field(default=None, nullable=True)
+    other_current_assets: Optional[int] = Field(default=None, nullable=True)
+    hedging_assets_current: Optional[int] = Field(default=None, nullable=True)
+    inventory: Optional[int] = Field(default=None, nullable=True)
+    finished_goods: Optional[int] = Field(default=None, nullable=True)
+    work_in_process: Optional[int] = Field(default=None, nullable=True)
+    raw_materials: Optional[int] = Field(default=None, nullable=True)
+    receivables: Optional[int] = Field(default=None, nullable=True)
+    accounts_receivable: Optional[int] = Field(default=None, nullable=True)
+    allowance_for_doubtful_accounts_receivable: Optional[int] = Field(default=None, nullable=True)
+    gross_accounts_receivable: Optional[int] = Field(default=None, nullable=True)
+    cash_cash_equivalents_and_short_term_investments: Optional[int] = Field(default=None, nullable=True)
+    other_short_term_investments: Optional[int] = Field(default=None, nullable=True)
+    cash_and_cash_equivalents: Optional[int] = Field(default=None, nullable=True)
+    cash_equivalents: Optional[int] = Field(default=None, nullable=True)
+    cash_financial: Optional[int] = Field(default=None, nullable=True)
+    current_accrued_expenses: Optional[int] = Field(default=None, nullable=True)
+    non_current_deferred_assets: Optional[int] = Field(default=None, nullable=True)
+    non_current_deferred_taxes_assets: Optional[int] = Field(default=None, nullable=True)
+    other_receivables: Optional[int] = Field(default=None, nullable=True)
+
+
+# --- Backward Compatibility ---
+BalanceSheet = QuarterlyBalanceSheet

@@ -22,13 +22,18 @@ async def get_income_statement_route(
     - **company**: The name of the company for which to retrieve the income statement.
     """
     try:
-        statements, _ = await get_income_statement(company)
-        logger.debug(f"Router received income statement: {statements}") 
-        if not statements:
+        income_statement = await get_income_statement(company)
+        logger.debug(f"Router received income statement: {income_statement}") # Debug print changed to logger.debug
+        if not income_statement:
+            # Return a default/empty IncomeStatement if not found for now to ensure the API returns 200 OK.
+            # Proper error handling will be addressed in a later task.
             return IncomeStatement(
+                company_name=company,
                 ticker="N/A",
+                revenue=0.0,
+                cost_of_goods_sold=0.0,
             )
-        return next(iter(statements.values()))
+        return income_statement
     except Exception as e:
         logger.exception(f"Internal server error: {str(e)}") # Replaced traceback.print_exc() with logger.exception
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")

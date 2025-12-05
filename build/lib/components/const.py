@@ -4,12 +4,6 @@ from enum import StrEnum
 QUARTERLY_INCOME_STATEMENT_COLLECTION = "quarterly_income_statements"
 FIRESTORE_DATABASE = "financial-data"
 
-class YFinanceEnum:
-    class Freq(StrEnum):
-        QUARTERLY = "quarterly"
-        YEARLY = "yearly"
-        
-
 class LlmModels(StrEnum):
     GEMINI_1_5_FLASH = "gemini-1.5-flash"
     GEMINI_2_5_FLASH = "gemini-2.5-flash"

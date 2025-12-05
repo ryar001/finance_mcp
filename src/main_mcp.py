@@ -1,11 +1,13 @@
 from fastmcp import FastMCP
-from src.main import app
+from src.tools import financial_tools, dev_tools
 
-
-mcp = FastMCP.from_fastapi(
-    app=app,
-    name="Financial MCP",
+mcp_server = FastMCP(
+    "Financial MCP Server",
+    tools=[
+        financial_tools.get_income_statement_tool,
+        financial_tools.get_balance_sheet_tool,
+        financial_tools.get_cashflow_statement_tool,
+        dev_tools.run_ai_tracker_tool,
+    ],
 )
 
-if __name__ == "__main__":
-    mcp.run()
