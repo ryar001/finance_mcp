@@ -1,3 +1,21 @@
+Warnings:
+- tests/test_live_financial_data.py
+
+What's New:
+- tests/test_live_financial_data.py:
+    - Imported `get_cashflow_statement` and `QuarterlyCashFlowStatement`.
+    - Added `test_get_cash_flow_statement_live` to verify cash flow statement retrieval.
+- src/main_mcp.py:
+    - Added import for `financial_tools`.
+- src/models/cash_flow_statement.py:
+    - Added `short_term_debt_payments`, `income_tax_paid_supplemental_data`, and `other_non_cash_items` fields to `QuarterlyCashFlowStatement`.
+
+Refactor:
+- src/components/init_config.py:
+    - Modified log directory initialization to resolve relative paths from the project root.
+- src/components/settings.yml:
+    - Updated `log_dir` path to "Logs/General_logs".
+
 ## Project Update Log: 2025-12-05
 
 ### What's New

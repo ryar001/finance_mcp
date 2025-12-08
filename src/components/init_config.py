@@ -9,6 +9,10 @@ with open(settings_path, 'r') as f:
 log_settings = settings.get('log_setting', {})
 log_file = log_settings.get('log_file')
 log_dir = log_settings.get('log_dir')
+if log_dir and not Path(log_dir).is_absolute():
+    # Resolve relative to project root (assuming src/components/init_config.py structure)
+    project_root = Path(__file__).resolve().parent.parent.parent
+    log_dir = str(project_root / log_dir)
 log_level = log_settings.get('log_level')
 print_output = log_settings.get('print_output', False) # Default to False if not specified
 

@@ -33,6 +33,7 @@ class QuarterlyCashFlowStatement(BaseStatementsModel, table=True):
     common_stock_issuance: Optional[int] = Field(default=None, nullable=True)
     net_issuance_payments_of_debt: Optional[int] = Field(default=None, nullable=True)
     net_short_term_debt_issuance: Optional[int] = Field(default=None, nullable=True)
+    short_term_debt_payments: Optional[int] = Field(default=None, nullable=True) # Added field
     net_long_term_debt_issuance: Optional[int] = Field(default=None, nullable=True)
     long_term_debt_payments: Optional[int] = Field(default=None, nullable=True)
     long_term_debt_issuance: Optional[int] = Field(default=None, nullable=True)
@@ -57,6 +58,8 @@ class QuarterlyCashFlowStatement(BaseStatementsModel, table=True):
     change_in_account_payable: Optional[int] = Field(default=None, nullable=True)
     change_in_tax_payable: Optional[int] = Field(default=None, nullable=True)
     change_in_income_tax_payable: Optional[int] = Field(default=None, nullable=True)
+    income_tax_paid_supplemental_data: Optional[int] = Field(default=None, nullable=True) # Added field
+    other_non_cash_items: Optional[int] = Field(default=None, nullable=True) # Added field
     change_in_inventory: Optional[int] = Field(default=None, nullable=True)
     change_in_receivables: Optional[int] = Field(default=None, nullable=True)
     changes_in_account_receivables: Optional[int] = Field(default=None, nullable=True)

@@ -1,5 +1,5 @@
 from fastmcp import FastMCP
-from src.tools import financial_tools, dev_tools
+from src.tools import financial_tools
 
 mcp_server = FastMCP(
     "Financial MCP Server",
@@ -7,7 +7,5 @@ mcp_server = FastMCP(
         financial_tools.get_income_statement_tool,
         financial_tools.get_balance_sheet_tool,
         financial_tools.get_cashflow_statement_tool,
-        dev_tools.run_ai_tracker_tool,
     ],
 )
-
