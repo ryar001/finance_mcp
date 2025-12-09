@@ -1,3 +1,6 @@
+Operational Logs:
+- finance_server.log: Added log entries for FastMCP server startup.
+
 2025-12-09
 What's New:
 - finance_mcp/components/const.py: Introduced new constants and enums for YFinance frequencies, LLM models, fiscal quarters, exchanges, and log types.
