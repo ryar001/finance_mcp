@@ -1,4 +1,7 @@
 What's New:
+- finance_mcp/main_mcp.py: New file created to initialize the FastMCP server and register financial tools (get_income_statement_tool, get_balance_sheet_tool, get_cashflow_statement_tool).
+
+What's New:
 - `dev_mcp.py`: Introduced a new standalone MCP server for development tools, including `run_ai_tracker` for tracking changes, generating AI summaries, and committing.
 - `finance_mcp_server.py`: Added a new entry point for the finance MCP server, including stderr redirection to `finance_server.log`.
 
