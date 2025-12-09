@@ -10,7 +10,7 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.services.financial_data import get_income_statement, list_available_models
+from finance_mcp.services.financial_data import get_income_statement, list_available_models
 
 
 async def main():

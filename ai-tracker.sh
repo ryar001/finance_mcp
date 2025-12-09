@@ -12,6 +12,7 @@
 #   force: Ignore AI-detected errors and proceed with commit
 
 set -e
+set -o pipefail
 
 FORCE_MODE=false
 if [ "$1" = "force" ]; then
@@ -136,65 +137,101 @@ else
     DIFF=$(eval "$DIFF_COMMAND" | grep -v 'ai-tracker\.sh' | grep -E '^(\+\+\+|---|\+|@@)' | grep -v '^[+ ]*$' | grep -v '^-*$')
 fi
 
-if [ -z "$DIFF" ]; then
+if [[ -z "$DIFF" ]]; then
     echo "No relevant changes found. Exiting."
     exit 0
 fi
 
-# Use a temporary file to store Gemini's output
-TEMP_MD=$(mktemp)
+# Escape backticks in the diff to prevent shell execution inside HEREDOC
+ESCAPED_DIFF=$(printf "%s" "${DIFF}" | sed 's/`/\\`/g')
 
-# --- Summarize code changes with Gemini ---
-gemini -m gemini-2.5-flash > "$TEMP_MD" <<HEREDOC
-You are an expert technical writer and code reviewer.
+# --- Check for syntax errors with ruff ---
+echo "🔍 Checking for syntax errors with ruff..."
+
+# Get list of Python files being changed.
+# We use eval to handle both 'git diff --staged' and 'git diff <commit>..HEAD'
+PYTHON_FILES_TO_CHECK=$(eval "$DIFF_COMMAND" --name-only --diff-filter=AM | grep '\.py$' || true)
+
+if [ -n "$PYTHON_FILES_TO_CHECK" ]; then
+    # We pass the files to ruff. If it returns a non-zero exit code, it means there are errors.
+    if ! ruff check $PYTHON_FILES_TO_CHECK; then
+        if [ "$FORCE_MODE" = "true" ]; then
+            echo "⚠️  Ruff found errors, but force mode is on. Proceeding..."
+        else
+            echo "❌ Ruff found errors. Aborting update." >&2
+            echo "   Use 'force' as the first argument to override and commit anyway." >&2
+            exit 1
+        fi
+    else
+        echo "✅ No Python syntax errors found."
+    fi
+else
+    echo "ℹ️ No Python files to check."
+fi
+
+
+# Prepare the prompt for Gemini
+GEMINI_PROMPT="You are an expert technical writer and git user.
 
 ### CONTEXT ###
-The user has provided a git diff output. Your task is to analyze the changes for errors, breakpoints, and then generate a summary suitable for a project update log.
+The user has provided a git diff output. Your task is to:
+1.  Generate a summary of the changes suitable for a project update log.
+2.  Generate a conventional git commit message.
 
 ### PRIMARY TASK ###
-1.  **Review for errors and breakpoints**:
-    - Check for obvious errors in the code (e.g., syntax errors). If you find any, output ONLY a description of the error and the file it is in along with its line number, prefixed with "ERROR: ".
-    - Check for breakpoints (e.g., pdb.set_trace(), breakpoint()). If you find any, you will mention it later.
-
+#### Part 1: Summary Generation
+1.  **Review for breakpoints**: Check for breakpoints (e.g., 'pdb.set_trace()', 'breakpoint()').
 2.  **Summarize and categorize changes**:
-    - If no errors are found, summarize and categorize the changes from the git diff.
+    - Summarize and categorize the changes from the git diff.
     - Use a category for each change (e.g., 'What's New', 'Bugfix', 'Refactor').
-    - If you found breakpoints, add a 'Warnings' section at the top of your summary, listing the files containing breakpoints.
+    - If you found breakpoints, add a 'Warnings' section at the top of your summary.
+
+#### Part 2: Commit Message Generation
+1.  Based on the changes, generate a concise and relevant git commit message.
+2.  The first line should be the subject, following Conventional Commits format (e.g., 'feat: add new feature').
+3.  The subject should be a maximum of 50 characters.
+4.  The body should contain a brief, 1-2 sentence description if necessary.
 
 ### SPECIFICATIONS & INSTRUCTIONS ###
-- Group changes by category, then by file.
-- Do not include spaces, newlines, or whitespace-only changes.
-- Do not include any conversational text outside the formatted summary.
+- Group summary changes by category, then by file.
+- Do not include spaces, newlines, or whitespace-only changes in the summary.
 - The most recent update must be placed at the top of the file.
+- The current date is $(date +%Y-%m-%d).
 
 ### OUTPUT FORMAT & CONSTRAINTS ###
-- If errors are found, output ONLY the error description (e.g., "ERROR: Syntax error in main.py").
-- Otherwise, provide your response exclusively as the raw text of the summary.
-- DO NOT include any explanations or introductory sentences.
-- The current date is $(date +%Y-%m-%d).
+- Provide your response as raw text, with the summary and commit message separated by a unique delimiter.
+- DO NOT include any explanations or conversational text.
+
+Use this exact format for your output:
+==SUMMARY_START==
+<Your generated summary here>
+==SUMMARY_END==
+==COMMIT_MSG_START==
+<Your generated commit message here>
+==COMMIT_MSG_END==
 
 Act autonomously. Do not ask for clarification. Begin analysis immediately when invoked.
 
-${DIFF}
-HEREDOC
+${ESCAPED_DIFF}
+"
 
-# Check for errors reported by Gemini
-if grep -q "^ERROR:" "$TEMP_MD"; then
-    if [ "$FORCE_MODE" = "true" ]; then
-        ERROR_MSG=$(cat "$TEMP_MD")
-        echo "⚠️  AI found potential errors, but force mode is on. Proceeding..."
-        echo "$ERROR_MSG"
-        SUMMARY="Forced update. AI detected the following potential error: $ERROR_MSG"
-        echo "$SUMMARY" > "$TEMP_MD"
-    else
-        cat "$TEMP_MD"
-        rm "$TEMP_MD"
-        echo "Errors found by AI. Aborting update."
-        exit 1
-    fi
+# --- Generate summary and commit message with Gemini ---
+AI_OUTPUT=$(printf "%s" "$GEMINI_PROMPT" | gemini -m gemini-2.5-flash) || {
+    echo "Error: Gemini command failed. Please check its configuration and the error messages above." >&2
+    exit 1
+}
+
+# Parse the AI output
+SUMMARY=$(echo "$AI_OUTPUT" | sed -n '/==SUMMARY_START==/,/==SUMMARY_END==/p' | sed '1d;$d')
+COMMIT_MSG=$(echo "$AI_OUTPUT" | sed -n '/==COMMIT_MSG_START==/,/==COMMIT_MSG_END==/p' | sed '1d;$d')
+
+# Validate parsing
+if [ -z "$SUMMARY" ] || [ -z "$COMMIT_MSG" ]; then
+    echo "Error: Failed to parse AI output. Could not find summary or commit message." >&2
+    echo "AI Output:" >&2
+    echo "$AI_OUTPUT" >&2
+    exit 1
 fi
-
-SUMMARY=$(cat "$TEMP_MD")
 
 # Auto-detect version bump type if not specified and not none
 if [ "$VERSION_BUMP" = "patch" ] && [ "$1" != "-v" ]; then
@@ -229,9 +266,6 @@ else
     echo -e "${SUMMARY}" > "$UPDATES_FILE"
 fi
 
-# Clean up temp file
-rm "$TEMP_MD"
-
 # Update version file if needed
 if [ "$VERSION_BUMP" != "none" ]; then
     # Check if the new version tag already exists
@@ -249,37 +283,6 @@ fi
 
 # Add the updated UPDATES.md to staged files
 git add "$UPDATES_FILE"
-
-# --- Generate commit message with Gemini ---
-COMMIT_MSG=$(gemini -m gemini-2.5-flash <<HEREDOC2
-### ROLE & PERSONA ###
-You are an expert at generating git commit messages.
-
-### CONTEXT ###
-The user has provided a summary of code changes.
-
-### PRIMARY TASK ###
-Based on the summary, generate a concise and relevant git commit message.
-
-### SPECIFICATIONS & INSTRUCTIONS ###
-- The first line should be the subject, following Conventional Commits format (e.g., 'feat: add new feature').
-- The subject should be a maximum of 50 characters.
-- The body should contain a brief, 1-2 sentence description if necessary.
-
-### EXAMPLE FORMAT ###
-feat: add user authentication
-This commit adds a new user authentication flow using OAuth 2.0.
-
-### OUTPUT FORMAT & CONSTRAINTS ###
-- Provide your response as the raw commit message.
-- Your output will be passed directly to 'git commit -m'. It must not contain anything other than the commit message itself.
-- Do not include any explanations or conversational text.
-
-Act autonomously. Do not ask for clarification. Begin analysis immediately when invoked.
-
-${SUMMARY}
-HEREDOC2
-)
 
 # Commit the changes
 git commit -m "$COMMIT_MSG"

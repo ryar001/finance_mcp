@@ -1,7 +1,7 @@
 [tool.uv]
 
 [project]
-name = "finance_mcp"
+name = "finance-mcp-jokerssd"
 version = "0.1.0"
 description = "A financial data server that enables LLMs to pull financial data."
 authors = [
@@ -38,6 +38,15 @@ dev = [
     "ruff",
 ]
 
+[project.scripts]
+finance-mcp = "finance_mcp.main_mcp:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["finance_mcp"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

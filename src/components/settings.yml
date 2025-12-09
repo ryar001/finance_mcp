@@ -1,9 +1,0 @@
-
-# Logging Configuration: Defines settings for logging.
-log_setting:
-  log_level: INFO # Minimum logging level (e.g., DEBUG, INFO, WARNING, ERROR, CRITICAL).
-  log_format: '%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s' # Format string for log messages.
-  log_when: 'D' # When to rotate log files (e.g., 'D' for daily).
-  log_dir: "Logs/General_logs" # Directory for log files.
-  log_file: "General_logs.log" # Name of the log file.
-

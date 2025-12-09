@@ -1,8 +1,8 @@
 import pytest
-from src.services.financial_data import get_income_statement, get_balance_sheet, get_cashflow_statement
-from src.models.income_statement import QuarterlyIncomeStatement
-from src.models.balance_sheet import QuarterlyBalanceSheet
-from src.models.cash_flow_statement import QuarterlyCashFlowStatement
+from finance_mcp.services.financial_data import get_income_statement, get_balance_sheet, get_cashflow_statement
+from finance_mcp.models.income_statement import QuarterlyIncomeStatement
+from finance_mcp.models.balance_sheet import QuarterlyBalanceSheet
+from finance_mcp.models.cash_flow_statement import QuarterlyCashFlowStatement
 
 # Define the path to the .env file explicitly for the test
 ENV_PATH = ".env"

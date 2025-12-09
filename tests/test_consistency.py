@@ -1,5 +1,5 @@
 import pytest
-from src.services.financial_data import get_income_statement
+from finance_mcp.services.financial_data import get_income_statement
 
 @pytest.mark.asyncio
 async def test_get_income_statement_consistency():

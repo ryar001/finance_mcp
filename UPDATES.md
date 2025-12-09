@@ -1,3 +1,35 @@
+What's New:
+- `dev_mcp.py`: Introduced a new standalone MCP server for development tools, including `run_ai_tracker` for tracking changes, generating AI summaries, and committing.
+- `finance_mcp_server.py`: Added a new entry point for the finance MCP server, including stderr redirection to `finance_server.log`.
+
+Refactor:
+- `pyproject.toml`: Updated project name to `finance-mcp-jokerssd` and added a `finance-mcp` script entry point. Configured `hatchling` for wheel builds to include the `finance_mcp` package.
+- File Restructuring: Moved core source files from `src/` directly into the `finance_mcp/` package structure.
+- Import Paths: Updated import statements in test files (`test_live_api.py`, `tests/test_consistency.py`, `tests/test_live_financial_data.py`, `tests/test_mcp_tools.py`, `tests/test_routers.py`) to reflect the new `finance_mcp` package structure.
+
+Removed:
+- `src/components/const.py`
+- `src/components/init_config.py`
+- `src/components/logging_utils.py`
+- `src/components/rotateHandler.py`
+- `src/components/settings.yml`
+- `src/components/utils.py`
+- `src/main.py`
+- `src/main_mcp.py`
+- `src/models/balance_sheet.py`
+- `src/models/base_model.py`
+- `src/models/cash_flow_statement.py`
+- `src/models/income_statement.py`
+- `src/prompts/get_balance_sheet_agent.py`
+- `src/prompts/get_income_statement_agent.py`
+- `src/prompts/prompt_base.py`
+- `src/prompts/sources.py`
+- `src/routers/income_statement.py`
+- `src/services/financial_data.py`
+- `src/services/firestore_helper.py`
+- `src/services/utils.py`
+- `src/tools/financial_tools.py`
+
 Warnings:
 - tests/test_live_financial_data.py
 

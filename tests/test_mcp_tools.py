@@ -1,9 +1,9 @@
 import pytest
 from fastmcp import Client
-from src.main_mcp import mcp_server
-from src.models.income_statement import QuarterlyIncomeStatement
-from src.models.balance_sheet import QuarterlyBalanceSheet
-from src.models.cash_flow_statement import QuarterlyCashFlowStatement
+from finance_mcp.main_mcp import mcp_server
+from finance_mcp.models.income_statement import QuarterlyIncomeStatement
+from finance_mcp.models.balance_sheet import QuarterlyBalanceSheet
+from finance_mcp.models.cash_flow_statement import QuarterlyCashFlowStatement
 
 @pytest.mark.asyncio
 async def test_get_income_statement_tool():
