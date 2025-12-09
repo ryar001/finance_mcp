@@ -1,3 +1,26 @@
+2025-12-09
+What's New:
+- finance_mcp/components/const.py: Introduced new constants and enums for YFinance frequencies, LLM models, fiscal quarters, exchanges, and log types.
+- finance_mcp/components/init_config.py: Added initialization for logging configuration, including dynamic log directory resolution and loading settings from `settings.yml`.
+- finance_mcp/components/logging_utils.py: Implemented a new `LoggingUtils` class for structured logging with `structlog`, supporting JSON and plain-text formats, asynchronous file handlers, and context binding. Includes a comprehensive test suite.
+- finance_mcp/components/rotateHandler.py: Added asynchronous file handlers (`AsyncTimedRotatingFileHandler`, `AsyncFileHandler`, `AsyncRotatingFileHandler`) to manage log file rotation without blocking the main thread.
+- finance_mcp/components/settings.yml: Created a new YAML configuration file for logging settings (level, format, rotation, directory, file name).
+- finance_mcp/components/utils.py: Introduced utility functions for converting camelCase to snake_case, mapping yfinance data to Pydantic models (income statement, balance sheet, cash flow statement), and handling data cleaning.
+- finance_mcp/main.py: Set up the main FastAPI application, integrating the MCP server, defining a lifespan context, and including the income statement router.
+- finance_mcp/models/balance_sheet.py: Defined the `QuarterlyBalanceSheet` SQLModel with fields for various balance sheet metrics, extending `BaseStatementsModel`.
+- finance_mcp/models/base_model.py: Created a `BaseStatementsModel` for common fields across financial statements (id, ticker, last_updated, last_earnings_date).
+- finance_mcp/models/cash_flow_statement.py: Defined the `QuarterlyCashFlowStatement` SQLModel with fields for various cash flow statement metrics, extending `BaseStatementsModel`. Added `short_term_debt_payments` and `income_tax_paid_supplemental_data`, `other_non_cash_items` fields.
+- finance_mcp/models/income_statement.py: Defined the `QuarterlyIncomeStatement` SQLModel with fields for various income statement metrics, extending `BaseStatementsModel`.
+- finance_mcp/prompts/get_balance_sheet_agent.py: Created a prompt template for an AI agent to extract balance sheet data.
+- finance_mcp/prompts/get_income_statement_agent.py: Created a prompt template for an AI agent to extract income statement data, emphasizing official sources and strict JSON output.
+- finance_mcp/prompts/prompt_base.py: Defined a base class for prompt templates.
+- finance_mcp/prompts/sources.py: Defined common data sources for financial statements.
+- finance_mcp/routers/income_statement.py: Established FastAPI routes for retrieving income statements, handling requests and exceptions.
+- finance_mcp/services/financial_data.py: Implemented asynchronous functions to fetch income statement, balance sheet, and cash flow data using `yfinance` and map them to respective Pydantic models.
+- finance_mcp/services/firestore_helper.py: Provided functions for uploading and retrieving financial documents from Google Firestore, including authentication guidance.
+- finance_mcp/services/utils.py: Added utility functions for cleaning JSON output, calculating annual totals from quarterly data, and generating NoSQL document IDs.
+- finance_mcp/tools/financial_tools.py: Defined asynchronous tools for retrieving income statements, balance sheets, and cash flow statements, leveraging the `financial_data` service.
+
 What's New:
 - finance_mcp/main_mcp.py: New file created to initialize the FastMCP server and register financial tools (get_income_statement_tool, get_balance_sheet_tool, get_cashflow_statement_tool).
 
