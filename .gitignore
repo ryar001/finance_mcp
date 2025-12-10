@@ -14,5 +14,10 @@ dist/
 
 # Ignore sensitive files and logs
 .stockgpt_google_cloud_service_account.json
-debug_gemini.py
 logs/
+
+# all '.' files
+.*
+
+# all log
+*.log

@@ -23,7 +23,7 @@ class QuarterlyIncomeStatement(BaseStatementsModel, table=True):
     )
 
     # Financial Metrics (Source: Single Complete Source)
-    tax_effect_of_unusual_items: Optional[int] = Field(default=None, nullable=True)
+    tax_effect_of_unusual_items: Optional[float] = Field(default=None, nullable=True)
     tax_rate_for_calcs: Optional[float] = Field(default=None, nullable=True)
     normalized_ebitda: Optional[int] = Field(default=None, nullable=True)
     total_unusual_items: Optional[int] = Field(default=None, nullable=True)
@@ -36,7 +36,7 @@ class QuarterlyIncomeStatement(BaseStatementsModel, table=True):
     net_interest_income: Optional[int] = Field(default=None, nullable=True)
     interest_expense: Optional[int] = Field(default=None, nullable=True)
     interest_income: Optional[int] = Field(default=None, nullable=True)
-    normalized_income: Optional[int] = Field(default=None, nullable=True)
+    normalized_income: Optional[float] = Field(default=None, nullable=True)
     net_income_from_continuing_and_discontinued_operation: Optional[int] = Field(default=None, nullable=True)
     total_expenses: Optional[int] = Field(default=None, nullable=True)
     total_operating_income_as_reported: Optional[int] = Field(default=None, nullable=True)

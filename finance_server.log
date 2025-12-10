@@ -744,3 +744,312 @@ KeyboardInterrupt
 
 [12/09/25 14:35:47] INFO     Starting MCP server 'Financial MCP   server.py:1971
                              Server' with transport 'stdio'                     
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/09/25 17:44:03] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/09/25 17:47:34] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/09/25 18:08:29] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/09/25 18:08:51] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+
+
+                                  ╭──────────────────────────────────────────────────────────────────────────────╮                                   
+                                  │                                                                              │                                   
+                                  │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │                                   
+                                  │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │                                   
+                                  │                                                                              │                                   
+                                  │                                FastMCP 2.13.1                                │                                   
+                                  │                                                                              │                                   
+                                  │                                                                              │                                   
+                                  │                    🖥  Server name: Financial MCP Server                      │                                   
+                                  │                                                                              │                                   
+                                  │                    📦 Transport:   STDIO                                     │                                   
+                                  │                                                                              │                                   
+                                  │                    📚 Docs:        https://gofastmcp.com                     │                                   
+                                  │                    🚀 Hosting:     https://fastmcp.cloud                     │                                   
+                                  │                                                                              │                                   
+                                  ╰──────────────────────────────────────────────────────────────────────────────╯                                   
+
+
+[2;36m[12/09/25 22:26:14][0m[2;36m [0m[34mINFO    [0m Starting MCP server [32m'Financial MCP Server'[0m with transport [32m'stdio'[0m                                         ]8;id=256668;file:///Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/server/server.py\[2mserver.py[0m]8;;\[2m:[0m]8;id=269507;file:///Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/server/server.py#1971\[2m1971[0m]8;;\
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/09/25 22:26:38] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/09/25 22:26:43] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/09/25 22:26:50] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+[12/09/25 22:26:50] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+Traceback (most recent call last):
+  File "/Users/jokerssd/Documents/finance_mcp/finance_mcp_server.py", line 15, in <module>
+    mcp_server.run()
+  File "/Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/server/server.py", line 449, in run
+    anyio.run(
+  File "/Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/anyio/_core/_eventloop.py", line 75, in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2365, in run
+    return runner.run(wrapper())
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 678, in run_until_complete
+    self.run_forever()
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 645, in run_forever
+    self._run_once()
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 1961, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/selectors.py", line 566, in select
+    kev_list = self._selector.control(None, max_ev, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 157, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Exception ignored in: <module 'threading' from '/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/threading.py'>
+Traceback (most recent call last):
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/threading.py", line 1624, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+
+
+                                  ╭──────────────────────────────────────────────────────────────────────────────╮                                   
+                                  │                                                                              │                                   
+                                  │                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │                                   
+                                  │                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │                                   
+                                  │                                                                              │                                   
+                                  │                                FastMCP 2.13.1                                │                                   
+                                  │                                                                              │                                   
+                                  │                                                                              │                                   
+                                  │                    🖥  Server name: Financial MCP Server                      │                                   
+                                  │                                                                              │                                   
+                                  │                    📦 Transport:   STDIO                                     │                                   
+                                  │                                                                              │                                   
+                                  │                    📚 Docs:        https://gofastmcp.com                     │                                   
+                                  │                    🚀 Hosting:     https://fastmcp.cloud                     │                                   
+                                  │                                                                              │                                   
+                                  ╰──────────────────────────────────────────────────────────────────────────────╯                                   
+
+
+[2;36m[12/09/25 22:37:52][0m[2;36m [0m[34mINFO    [0m Starting MCP server [32m'Financial MCP Server'[0m with transport [32m'stdio'[0m                                         ]8;id=236437;file:///Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/server/server.py\[2mserver.py[0m]8;;\[2m:[0m]8;id=311235;file:///Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/server/server.py#1971\[2m1971[0m]8;;\
+Traceback (most recent call last):
+  File "/Users/jokerssd/Documents/finance_mcp/finance_mcp_server.py", line 15, in <module>
+    mcp_server.run()
+  File "/Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/server/server.py", line 449, in run
+    anyio.run(
+  File "/Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/anyio/_core/_eventloop.py", line 75, in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2365, in run
+    return runner.run(wrapper())
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 678, in run_until_complete
+    self.run_forever()
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 645, in run_forever
+    self._run_once()
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/base_events.py", line 1961, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/selectors.py", line 566, in select
+    kev_list = self._selector.control(None, max_ev, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/asyncio/runners.py", line 157, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Exception ignored in: <module 'threading' from '/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/threading.py'>
+Traceback (most recent call last):
+  File "/Users/jokerssd/.local/share/uv/python/cpython-3.12.9-macos-aarch64-none/lib/python3.12/threading.py", line 1624, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 
+[2;36m[12/09/25 22:38:16][0m[2;36m [0m[1;31mERROR   [0m No server object found in [35m/Users/jokerssd/Documents/finance_mcp/[0m[95mfinance_mcp_server.py.[0m Please either:  ]8;id=675224;file:///Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/utilities/mcp_server_config/v1/sources/filesystem.py\[2mfilesystem.py[0m]8;;\[2m:[0m]8;id=294621;file:///Users/jokerssd/Documents/finance_mcp/.venv/lib/python3.12/site-packages/fastmcp/utilities/mcp_server_config/v1/sources/filesystem.py#160\[2m160[0m]8;;\
+[2;36m                    [0m         [1;36m1[0m. Use a standard variable name [1m([0mmcp, server, or app[1m)[0m                                                  [2m                 [0m
+[2;36m                    [0m         [1;36m2[0m. Specify the entrypoint name in fastmcp.json or use `file.py:object` syntax as your path.            [2m                 [0m
+[12/10/25 10:09:46] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.1                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: Financial MCP Server                      │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[12/10/25 10:43:05] INFO     Starting MCP server 'Financial MCP   server.py:1971
+                             Server' with transport 'stdio'                     
