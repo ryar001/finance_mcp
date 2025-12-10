@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  title: Financial MCP Server
+  version: 1.0.0
+paths:
+  /income_statement:
+    get:
+      summary: Retrieve an income statement for a company.
+      parameters:
+        - name: company
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A JSON object containing the income statement.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncomeStatement'
+  /balance_sheet:
+    get:
+      summary: Retrieve a balance sheet for a company.
+      parameters:
+        - name: company
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A JSON object containing the balance sheet.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceSheet'
+  /cash_flow_statement:
+    get:
+      summary: Retrieve a cash flow statement for a company.
+      parameters:
+        - name: company
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A JSON object containing the cash flow statement.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CashFlowStatement'
+components:
+  schemas:
+    IncomeStatement:
+      type: object
+      properties:
+        revenue:
+          type: number
+        cost_of_goods_sold:
+          type: number
+        gross_profit:
+          type: number
+        operating_expenses:
+          type: number
+        operating_income:
+          type: number
+        non_operating_income:
+          type: number
+        pre_tax_income:
+          type: number
+        income_tax_expense:
+          type: number
+        net_income:
+          type: number
+    BalanceSheet:
+      type: object
+      properties:
+        assets:
+          type: object
+          properties:
+            current_assets:
+              type: object
+              properties:
+                cash_and_cash_equivalents:
+                  type: number
+                accounts_receivable:
+                  type: number
+                inventory:
+                  type: number
+            non_current_assets:
+              type: object
+              properties:
+                property_plant_and_equipment:
+                  type: number
+                goodwill:
+                  type: number
+                intangible_assets:
+                  type: number
+        liabilities:
+          type: object
+          properties:
+            current_liabilities:
+              type: object
+              properties:
+                accounts_payable:
+                  type: number
+                short_term_debt:
+                  type: number
+            non_current_liabilities:
+              type: object
+              properties:
+                long_term_debt:
+                  type: number
+        equity:
+          type: object
+          properties:
+            common_stock:
+              type: number
+            retained_earnings:
+              type: number
+    CashFlowStatement:
+      type: object
+      properties:
+        operating_activities:
+          type: object
+          properties:
+            net_income:
+              type: number
+            depreciation_and_amortization:
+              type: number
+            change_in_working_capital:
+              type: number
+        investing_activities:
+          type: object
+          properties:
+            capital_expenditures:
+              type: number
+            acquisitions:
+              type: number
+        financing_activities:
+          type: object
+          properties:
+            issuance_of_stock:
+              type: number
+            issuance_of_debt:
+              type: number
+            payment_of_dividends:
+              type: number

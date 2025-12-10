@@ -1,12 +1,23 @@
-# Python-generated files
+.DS_Store
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+.env*
 
-# Virtual environments
-.venv
-finance_mcp/
-.env
+# Python
+*.pyc
+.venv/
+venv/
+dist/
+*.egg-info/
+
+# ignore uv cache directory
+.uv/
+
+# Ignore sensitive files and logs
+.stockgpt_google_cloud_service_account.json
+logs/
+
+# all '.' files
+.*
+
+# all log
+*.log
